@@ -180,16 +180,7 @@ section > p {
     background: white;
     padding: 28px;
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-    border: 1px solid var(--gray-200);
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.4s ease;
-}
-
-.highlight-card.visible {
-    opacity: 1;
-    transform: translateY(0);
+    transition: all 0.2s ease;
 }
 
 .highlight-card:hover {
@@ -246,15 +237,13 @@ section > p {
     background: white;
     border-radius: 16px;
     padding: 32px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-    border: 1px solid var(--gray-200);
     overflow-x: auto;
     margin-bottom: 16px;
 }
 
 .architecture-diagram {
+    max-width: 100%;
     width: 100%;
-    min-width: 1000px;
     height: auto;
     display: block;
 }
@@ -277,6 +266,10 @@ section > p {
 }
 .smart-router {
     padding: 48px 60px;
+
+
+    max-width: 1200px;
+    margin: 0 auto 0px;
 }
 
 .smart-router .router-text p {
@@ -305,15 +298,12 @@ section > p {
     background: white;
     border-radius: 16px;
     padding: 32px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-    border: 1px solid var(--gray-200);
     overflow-x: auto;
     margin-bottom: 32px;
 }
 
 .smart-router .router-diagram svg {
     width: 100%;
-    min-width: 700px;
     height: auto;
     display: block;
 }
@@ -427,14 +417,6 @@ section > p {
     min-width: 220px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
     border: 1px solid var(--gray-200);
-    opacity: 0;
-    transform: translateX(-20px);
-    transition: all 0.4s ease;
-}
-
-.flow-step.visible {
-    opacity: 1;
-    transform: translateX(0);
 }
 
 .step-number {
@@ -484,14 +466,7 @@ section > p {
     text-align: center;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
     border: 1px solid var(--gray-200);
-    opacity: 0;
-    transform: scale(0.95);
-    transition: all 0.4s ease;
-}
-
-.perf-card.visible {
-    opacity: 1;
-    transform: scale(1);
+    transition: all 0.2s ease;
 }
 
 .perf-card:hover {
@@ -542,14 +517,7 @@ section > p {
     font-weight: 600;
     font-size: 1rem;
     color: var(--gray-800);
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.4s ease;
-}
-
-.chain-card.visible {
-    opacity: 1;
-    transform: translateY(0);
+    transition: all 0.2s ease;
 }
 
 .chain-card:hover {
@@ -569,11 +537,12 @@ section > p {
 .chain-card.base svg { color: #0052FF; }
 
 /* Footer */
-.footer {
-    border-top: 1px solid var(--gray-200);
+.footer, footer {
     padding: 48px 0;
     text-align: center;
     margin-top: 80px;
+    margin-bottom: 80px;
+    font-size: 2rem;
 }
 
 .footer-content p {
@@ -604,8 +573,14 @@ section > p {
 
 /* Responsive */
 @media (max-width: 768px) {
+    .smart-router {
+        padding: 18px 0px;
+    }
+    .abstract p, p{
+        font-size: 0.95rem;
+    }
     .header {
-        padding: 48px 0 40px;
+        padding: 48px 0 10px 0px;
     }
 
     .logo h1 {
@@ -621,12 +596,19 @@ section > p {
     }
 
     .abstract {
-        padding: 24px;
+        padding: 0px;
     }
 
     .diagram-container,
     .smart-router .router-diagram {
         padding: 16px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+
+    .smart-router .router-diagram svg {
+        min-width: 600px;
     }
 
     .consensus-flow {
@@ -648,22 +630,3 @@ section > p {
     }
 }
 
-/* Animations */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.header {
-    animation: fadeInUp 0.6s ease-out;
-}
-
-.abstract {
-    animation: fadeInUp 0.6s ease-out 0.1s both;
-}
