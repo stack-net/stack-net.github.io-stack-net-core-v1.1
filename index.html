@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StackNet: Decentralized AI Task Execution Engine</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <h1>StackNet 1.1: Decentralized AI Task Execution</h1>
+            </div>
+            <div class="nav-links">
+                <a href="https://github.com/stack-net" class="nav-link">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    GitHub
+                </a>
+            </div>
+        </header>
+
+        <!-- Abstract -->
+        <section class="abstract">
+            <h2>Abstract</h2>
+            <p>
+                We present <strong>StackNet</strong>, a decentralized peer-to-peer task execution network
+                designed for confidential trustless AI. StackNet is <strong>PolyModal</strong>, providing unified
+                routing and execution across the full spectrum of AI workloads: text inference, vision understanding, code
+                generation, text-to-speech (TTS), speech-to-text (STT), automatic speech recognition (ASR), instruction
+                following, multi-step reasoning, media generation, and tool calling. As foundation models proliferate with varying capabilities,
+                costs, and performance characteristics, the challenge of optimally routing requests across heterogeneous
+                compute resources while preserving privacy and enabling seamless monetization for compute operation has become paramount. StackNet
+                addresses this through a novel architecture that combines consensus, confidential
+                computing enclaves, an intelligent poly-modal routing system, and adaptive payment rails for compute resources.
+            </p>
+            <p>
+                Central to StackNet is the <strong>xRouter</strong>, an intelligent routing system that dynamically selects
+                the most suitable model for each query based on task complexity, cost constraints, and performance requirements.
+                The router implements over 9 distinct routing strategies organized into three categories: stateless routing, tool rounting (agent), 
+                and session routers that adapt to ongoing contexts. These strategies encompass
+                techniques including sematic caching, matrix factorization, KNN-similarity matching, SVM classification, 
+                graph-based routing for dependency resolution and Elo/BERT based signaling. 
+            </p>
+            <p>
+                StackNet introduces <strong>x402 payment integration</strong> for trustless compute monetization, enabling token-use based-execution billing 
+                where task submission is settled, user to network, network to agent, agent to operator, operator to dataset, attributing credit and each resource.
+                This eliminates the need for centralized billing infrastructure while ensuring atomic settlement—nodes
+                only execute tasks upon verified payment, and clients only pay for successfully completed work. The protocol
+                supports stablecoin payments across multiple chains with sub-second settlement finality.
+            </p>
+            <p>
+                For privacy-sensitive workloads, StackNet leverages <strong>confidential computing</strong> through hardware (GPU Level) 
+                encrypted enclaves Trusted Execution Environments (TEEs) that process data within hardware-isolated enclaves. This ensures that neither
+                the node operator nor other network participants can observe the plaintext inputs, model weights, or outputs
+                during inference. Remote attestation provides cryptographic proof that computation occurred within a genuine
+                secure enclave running unmodified code, enabling verifiable private AI without trusting any single party.
+            </p>
+            <p>
+                The architecture extends through a <strong>co-processor framework</strong> that enables specialized execution
+                units to handle domain-specific tasks. Co-processors include the Arena co-processor for competitive model
+                evaluation and ranking (used by xRouter), the MetaStream co-processor for real-time metadata aggregation, the Tool co-processor
+                for orchestrating MetaModel server invocations, the Agent co-processor for managing autonomous agent lifecycles,
+                and the Points co-processor for tracking reputation and reward distributions. Each co-processor operates as
+                an independent module that can be composed into complex execution pipelines.
+            </p>
+            <p>
+                StackNet enables any compute operator to become an <strong>AI Service Provider (AISP)</strong> through a
+                streamlined onboarding process. Operators obtain a cryptographic key from the network registry, load the
+                StackNet server runtime on their infrastructure, and connect their key to the network's control plane. Once
+                authenticated, the key acts as the operator's identity and authorization credential, enabling the control
+                plane to manage all aspects of the node's participation. This includes <em>coordination</em> of task
+                assignment and load distribution across the operator's resources, <em>model management</em> for dynamic
+                loading, warming, and versioning of LLM weights, <em>ejection</em> protocols that gracefully remove
+                misbehaving or underperforming nodes from the active pool, and <em>network orchestration</em> that maintains
+                global consistency of routing tables, capability registries, and consensus participant sets. The AISP model
+                transforms idle GPU capacity into monetizable inference endpoints without requiring operators to build
+                custom infrastructure—they simply provide compute, and StackNet handles discovery, routing, billing,
+                and quality assurance.
+            </p>
+            <p>
+                AISPs earn revenue through three primary execution channels. <strong>Inference earnings</strong> accrue
+                on a per-token basis for both input processing and output generation, with rates dynamically adjusted
+                based on model complexity, latency requirements, and current network demand—operators running larger
+                models or achieving lower latency command premium rates. <strong>Agent earnings</strong> compensate
+                operators for hosting persistent agent sessions that maintain state across multiple interactions;
+                AISPs receive a session fee for agent instantiation plus per-step fees as agents execute reasoning
+                chains, tool invocations, and sub-task delegations. <strong>Task execution earnings</strong> reward
+                operators for completing discrete computational jobs including image generation, audio transcription,
+                code execution, and document processing—each task type carries a base fee plus resource-proportional
+                charges for GPU-seconds, memory utilization, and storage I/O. All earnings settle atomically via x402
+                payment channels: clients pre-authorize payment bounds, operators execute work, and funds transfer
+                upon cryptographic proof of completion. The network maintains transparent fee schedules and real-time
+                earnings dashboards, enabling AISPs to optimize their infrastructure allocation across inference,
+                agent, and task workloads based on current market rates and their hardware capabilities.
+            </p>
+            <p>
+                StackNet introduces <strong>Imagination</strong>, a novel context primitive fundamentally distinct from
+                traditional memory systems. While memory stores and retrieves past interactions, Imaginations are
+                <em>author-attributed, portable context seeds</em> that proactively enrich inference contexts with
+                domain knowledge, specialized instructions, or curated perspectives. Each Imagination carries cryptographic
+                provenance linking it to its creator, enabling a new paradigm of <strong>attribution-first inclusion</strong>
+                where content contributors are recognized whenever their Imaginations influence model outputs. The MetaModel
+                and Imagination systems operate in concert: when an Imagination is injected into a context window, the
+                system tracks which tokens derive from authored content versus user input versus model generation. This
+                token-level lineage enables <strong>token utilization economics</strong>—authors receive proportional
+                compensation based on how extensively their Imaginations contributed to valuable outputs. The result is
+                a sustainable creator economy for AI context, where knowledge curators, domain experts, and prompt engineers
+                can publish Imaginations to the network and earn ongoing revenue as their contributions improve inference
+                quality across the ecosystem.
+            </p>
+        </section>
+
+        <!-- XRouter Deep Dive -->
+        <section class="smart-router" id="router">
+            <h2 style="text-align: center; display: block; width: 100%;">XRouter: Intelligent Model Selection</h2>
+            <div class="router-text">
+                <p>
+                    At the core of StackNet's task execution lies <strong>XRouter</strong>, an intelligent routing system
+                    engineered to optimize LLM inference by dynamically selecting the most suitable model for each query.
+                    Rather than defaulting to a single model or requiring manual selection, XRouter analyzes incoming
+                    requests in real-time and routes them to the optimal backend based on task complexity, cost constraints,
+                    and performance requirements.
+                </p>
+                <p>
+                    XRouter employs a novel <strong>Chain-of-Thought guided Diffusion Transformer (DiT)</strong> architecture
+                    for complex routing decisions. When a query arrives, the system first generates an explicit reasoning
+                    trace using Chain-of-Thought prompting—decomposing the routing decision into discrete analytical steps:
+                    task classification, capability requirements, latency sensitivity, and cost-quality tradeoffs. This
+                    reasoning trace is then encoded as conditioning signals for the DiT, which models the probability
+                    distribution over routing outcomes. The diffusion process iteratively refines an initial noise vector
+                    into a routing decision embedding, guided at each denoising step by the CoT-derived conditions. This
+                    approach enables XRouter to capture complex, non-linear relationships between query characteristics
+                    and optimal model assignments that traditional classifiers miss, while maintaining interpretability
+                    through the explicit reasoning chain. The DiT's generative nature also allows graceful handling of
+                    novel query types by interpolating between known routing patterns in the learned latent space.
+                </p>
+                <p>
+                    The router implements a comprehensive taxonomy of <strong>16+ routing strategies</strong> organized into
+                    four major categories. <em>Single-round routers</em> make stateless decisions using techniques such as
+                    KNN similarity matching against historical queries, SVM classification boundaries learned from labeled
+                    task-model pairs, and MLP neural networks trained on embedding representations. <em>Multi-round routers</em>
+                    extend this by maintaining conversation context, enabling more nuanced decisions as dialogues progress.
+                    <em>Agentic routers</em> handle complex tool-use scenarios where the routing decision depends on the
+                    anticipated chain of tool calls. Finally, <em>personalized routers</em> leverage matrix factorization
+                    and collaborative filtering to adapt routing decisions to individual user preferences and historical
+                    satisfaction patterns.
+                </p>
+                <p>
+                    Advanced routing strategies include <strong>Elo rating systems</strong> that continuously update model
+                    rankings based on pairwise comparison outcomes, <strong>graph-based routing</strong> for resolving task
+                    dependencies and orchestrating multi-step workflows, <strong>BERT-based semantic routing</strong> that
+                    understands query intent at a deep level, and <strong>hybrid probabilistic methods</strong> that combine
+                    multiple routing signals through Bayesian inference. The system also supports transformed-score routers
+                    that normalize heterogeneous quality metrics into comparable routing scores.
+                </p>
+                <p>
+                    StackNet exposes this routing intelligence through a <strong>unified interface</strong> supporting
+                    programmatic API access, command-line tools for training custom routing models, and interactive
+                    exploration. A complete data generation pipeline enables training from 11 benchmark datasets with
+                    automatic API calling and evaluation, allowing operators to fine-tune routing behavior for their
+                    specific workload characteristics.
+                </p>
+                <p>
+                    XRouter achieves <strong>ultra-low-latency workload coordination</strong> through a compact bitmask
+                    broadcasting protocol. Each AISP node continuously publishes three 256-bit vectors: a <em>resource
+                    bitmask</em> encoding hardware capabilities (GPU memory tiers, VRAM availability, CPU cores, network
+                    bandwidth classes), a <em>capability bitmask</em> representing supported modalities and models (text,
+                    vision, code, TTS, ASR, specific model families, quantization levels), and an <em>availability bitmask</em>
+                    indicating current load state across execution slots. These bitmasks propagate through the P2P gossip
+                    layer with sub-10ms update latency, enabling every node to maintain a real-time view of network-wide
+                    capacity. When a task arrives, XRouter performs bitwise AND operations between the task's requirement
+                    vector and cached node bitmasks to instantly identify candidate executors—no round-trip queries required.
+                    This approach reduces routing decisions to nanosecond-scale bit operations, enabling XRouter to evaluate
+                    thousands of potential execution targets in microseconds and achieve consistent sub-millisecond routing
+                    latency even as the network scales to thousands of AISPs.
+                </p>
+            </div>
+
+
+
+        <h2 style="text-align: center; display: block; width: 100%;">Framework & Application</h2>
+
+            <div class="router-diagram">
+                <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#6366f1"/>
+                        </marker>
+                    </defs>
+
+                    <!-- Input Task -->
+                    <g transform="translate(50, 160)">
+                        <rect width="120" height="80" rx="8" fill="#6366f1"/>
+                        <text x="60" y="35" text-anchor="middle" fill="white" font-weight="600" font-size="12">Incoming Task</text>
+                        <text x="60" y="55" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="10">type: ai-prompt</text>
+                        <text x="60" y="70" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="10">model: x:VL:30b</text>
+                    </g>
+
+                    <!-- Arrow to Router -->
+                    <path d="M 170 200 L 220 200" stroke="#6366f1" stroke-width="2" marker-end="url(#arrow)"/>
+
+                    <!-- Router Box -->
+                    <g transform="translate(230, 100)">
+                        <rect width="200" height="200" rx="12" fill="#14b8a6"/>
+                        <text x="100" y="30" text-anchor="middle" fill="white" font-weight="700" font-size="14">XRouter</text>
+
+                        <!-- Decision tree -->
+                        <g transform="translate(20, 50)">
+                            <rect width="160" height="35" rx="2" fill="rgba(255,255,255,0.2)"/>
+                            <text x="80" y="22" text-anchor="middle" fill="white" font-size="10">1. Content Classification</text>
+                        </g>
+                        <g transform="translate(20, 95)">
+                            <rect width="160" height="35" rx="2" fill="rgba(255,255,255,0.2)"/>
+                            <text x="80" y="22" text-anchor="middle" fill="white" font-size="10">2. GPU Availability Check</text>
+                        </g>
+                        <g transform="translate(20, 140)">
+                            <rect width="160" height="35" rx="2" fill="rgba(255,255,255,0.2)"/>
+                            <text x="80" y="22" text-anchor="middle" fill="white" font-size="10">3. Load + Reputation Score</text>
+                        </g>
+                    </g>
+
+                    <!-- Arrows to destinations -->
+                    <path d="M 430 150 L 500 80" stroke="#14b8a6" stroke-width="2" marker-end="url(#arrow)"/>
+                    <path d="M 430 200 L 500 200" stroke="#14b8a6" stroke-width="2" marker-end="url(#arrow)"/>
+                    <path d="M 430 250 L 500 320" stroke="#14b8a6" stroke-width="2" marker-end="url(#arrow)"/>
+
+                    <!-- GPU Worker -->
+                    <g transform="translate(510, 40)">
+                        <rect width="140" height="70" rx="8" fill="#f472b6"/>
+                        <text x="70" y="25" text-anchor="middle" fill="white" font-weight="600" font-size="11">GPU Worker</text>
+                        <text x="70" y="45" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9">Model: HOT</text>
+                        <text x="70" y="60" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9">Load: 0.3</text>
+                    </g>
+
+                    <!-- Remote Node -->
+                    <g transform="translate(510, 165)">
+                        <rect width="140" height="70" rx="8" fill="#8b5cf6"/>
+                        <text x="70" y="25" text-anchor="middle" fill="white" font-weight="600" font-size="11">Remote Node</text>
+                        <text x="70" y="45" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9">Tool: available</text>
+                        <text x="70" y="60" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9">Rep: 95</text>
+                    </g>
+
+                    <!-- Local Executor -->
+                    <g transform="translate(510, 290)">
+                        <rect width="140" height="70" rx="8" fill="#fbbf24"/>
+                        <text x="70" y="25" text-anchor="middle" fill="white" font-weight="600" font-size="11">Local Executor</text>
+                        <text x="70" y="45" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9">Fallback</text>
+                        <text x="70" y="60" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9">Container</text>
+                    </g>
+
+                    <!-- Selection criteria -->
+                    <g transform="translate(680, 40)">
+                        <text y="20" fill="#374151" font-size="10">Priority:</text>
+                        <text y="40" fill="#6b7280" font-size="9">1. Model warmth (HOT > WARM)</text>
+                        <text y="58" fill="#6b7280" font-size="9">2. Load factor (&lt; 0.9)</text>
+                        <text y="76" fill="#6b7280" font-size="9">3. Reputation score</text>
+                    </g>
+                </svg>
+            </div>
+        </section>
+
+        <!-- Architecture Diagram -->
+        <section class="architecture" id="architecture">
+            <div class="diagram-container">
+                <svg class="architecture-diagram" viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Background - flat white -->
+                    <defs>
+                        <marker id="arrowhead2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#64748b"/>
+                        </marker>
+                    </defs>
+                    <rect width="100%" height="100%" fill="#ffffff"/>
+
+                    <!-- Client Layer -->
+                    <g class="layer client-layer">
+                        <rect x="50" y="30" width="180" height="60" rx="2" fill="#7c3aed"/>
+                        <text x="140" y="65" text-anchor="middle" fill="white" font-weight="600" font-size="14">HTTP API</text>
+                        <text x="140" y="80" text-anchor="middle" fill="white" font-size="10">REST / WebSocket / SSE</text>
+                    </g>
+
+                    <!-- Arrow from Client to Router -->
+                    <path d="M 140 90 L 140 130" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrowhead2)"/>
+
+                    <!-- XRouter -->
+                    <g class="layer router-layer">
+                        <rect x="50" y="140" width="300" height="100" rx="2" fill="#a78bfa"/>
+                        <text x="200" y="170" text-anchor="middle" fill="white" font-weight="700" font-size="16">XRouter</text>
+                        <g transform="translate(70, 185)">
+                            <rect width="80" height="40" rx="2" fill="#c4b5fd"/>
+                            <text x="40" y="25" text-anchor="middle" fill="#4c1d95" font-size="10">Bitmask Match</text>
+                        </g>
+                        <g transform="translate(160, 185)">
+                            <rect width="80" height="40" rx="2" fill="#c4b5fd"/>
+                            <text x="40" y="25" text-anchor="middle" fill="#4c1d95" font-size="10">GPU Affinity</text>
+                        </g>
+                        <g transform="translate(250, 185)">
+                            <rect width="80" height="40" rx="2" fill="#c4b5fd"/>
+                            <text x="40" y="25" text-anchor="middle" fill="#4c1d95" font-size="10">Load Balance</text>
+                        </g>
+                    </g>
+
+                    <!-- Arrows from Router to Executors -->
+                    <path d="M 200 240 L 200 280" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrowhead2)"/>
+
+                    <!-- Executor Layer -->
+                    <g class="layer executor-layer">
+                        <text x="200" y="305" text-anchor="middle" fill="#374151" font-weight="600" font-size="14">Execution Layer</text>
+
+                        <!-- AI Executor -->
+                        <g transform="translate(30, 320)">
+                            <rect width="100" height="70" rx="2" fill="#c9848a"/>
+                            <text x="50" y="35" text-anchor="middle" fill="white" font-weight="500" font-size="11">AI Executor</text>
+                            <text x="50" y="52" text-anchor="middle" fill="white" font-size="9">PolyModal</text>
+                        </g>
+
+                        <!-- MetaModel Executor -->
+                        <g transform="translate(145, 320)">
+                            <rect width="100" height="70" rx="2" fill="#c9848a"/>
+                            <text x="50" y="35" text-anchor="middle" fill="white" font-weight="500" font-size="11">MetaModel</text>
+                            <text x="50" y="52" text-anchor="middle" fill="white" font-size="9">Container</text>
+                        </g>
+
+                        <!-- Blockchain Executor -->
+                        <g transform="translate(260, 320)">
+                            <rect width="100" height="70" rx="2" fill="#c9848a"/>
+                            <text x="50" y="35" text-anchor="middle" fill="white" font-weight="500" font-size="11">Blockchain</text>
+                            <text x="50" y="52" text-anchor="middle" fill="white" font-size="9">Multi-Chain</text>
+                        </g>
+                    </g>
+
+                    <!-- Result Repository -->
+                    <g class="layer result-layer">
+                        <rect x="50" y="420" width="300" height="80" rx="2" fill="#86efac"/>
+                        <text x="200" y="450" text-anchor="middle" fill="#166534" font-weight="700" font-size="14">Results Graph</text>
+                        <text x="200" y="470" text-anchor="middle" fill="#166534" font-size="11">Commit DAG</text>
+                        <text x="200" y="488" text-anchor="middle" fill="#166534" font-size="10">SHA-256 + Ed25519 Signatures</text>
+                    </g>
+
+                    <!-- Arrow to Consensus -->
+                    <path d="M 200 500 L 200 530" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrowhead2)"/>
+
+                    <!-- BFT Consensus -->
+                    <g class="layer consensus-layer">
+                        <rect x="50" y="540" width="300" height="70" rx="2" fill="#374151"/>
+                        <text x="200" y="570" text-anchor="middle" fill="white" font-weight="700" font-size="14">Consensus Engine</text>
+                        <text x="200" y="590" text-anchor="middle" fill="#d1d5db" font-size="10">Tolerates f = (n-1)/3 Byzantine faults</text>
+                    </g>
+
+                    <!-- P2P Network Section -->
+                    <g class="layer p2p-layer" transform="translate(450, 30)">
+                        <rect width="320" height="580" rx="2" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+                        <text x="160" y="35" text-anchor="middle" fill="#1f2937" font-weight="700" font-size="16">P2P Network Layer</text>
+
+                        <!-- libp2p -->
+                        <g transform="translate(20, 55)">
+                            <rect width="280" height="50" rx="2" fill="#7c3aed"/>
+                            <text x="140" y="30" text-anchor="middle" fill="white" font-weight="600" font-size="12">TCP/mplex</text>
+                        </g>
+
+                        <!-- GossipSub -->
+                        <g transform="translate(20, 120)">
+                            <rect width="130" height="60" rx="2" fill="#a78bfa"/>
+                            <text x="65" y="25" text-anchor="middle" fill="white" font-weight="500" font-size="11">GossipSub</text>
+                            <text x="65" y="42" text-anchor="middle" fill="white" font-size="9">Bitmask Broadcast</text>
+                        </g>
+
+                        <!-- Kademlia DHT -->
+                        <g transform="translate(170, 120)">
+                            <rect width="130" height="60" rx="2" fill="#c4b5fd"/>
+                            <text x="65" y="25" text-anchor="middle" fill="#4c1d95" font-weight="500" font-size="11">Kademlia DHT</text>
+                            <text x="65" y="42" text-anchor="middle" fill="#4c1d95" font-size="9">Peer Discovery</text>
+                        </g>
+
+                        <!-- Topics -->
+                        <text x="160" y="210" text-anchor="middle" fill="#6b7280" font-weight="600" font-size="11">Pub/Sub Topics</text>
+                        <g transform="translate(20, 220)">
+                            <rect width="280" height="100" rx="2" fill="#f1f5f9"/>
+                            <text x="20" y="25" fill="#374151" font-size="10" font-family="JetBrains Mono">stack-net/tasks/1.0.0</text>
+                            <text x="20" y="45" fill="#374151" font-size="10" font-family="JetBrains Mono">stack-net/results/1.0.0</text>
+                            <text x="20" y="65" fill="#374151" font-size="10" font-family="JetBrains Mono">stack-net/imaginations/1.0.0</text>
+                            <text x="20" y="85" fill="#374151" font-size="10" font-family="JetBrains Mono">stack-net/x402/1.0.0</text>
+                        </g>
+
+                        <!-- Nodes visualization -->
+                        <g transform="translate(60, 350)">
+                            <circle cx="40" cy="40" r="30" fill="#7c3aed"/>
+                            <text x="40" y="45" text-anchor="middle" fill="white" font-size="10">AISP 1</text>
+
+                            <circle cx="160" cy="40" r="30" fill="#a78bfa"/>
+                            <text x="160" y="45" text-anchor="middle" fill="white" font-size="10">AISP 2</text>
+
+                            <circle cx="100" cy="120" r="30" fill="#c4b5fd"/>
+                            <text x="100" y="125" text-anchor="middle" fill="#4c1d95" font-size="10">AISP 3</text>
+
+                            <!-- Connection lines -->
+                            <line x1="70" y1="40" x2="130" y2="40" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4"/>
+                            <line x1="55" y1="65" x2="80" y2="95" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4"/>
+                            <line x1="145" y1="65" x2="120" y2="95" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4"/>
+                        </g>
+
+                        <text x="160" y="530" text-anchor="middle" fill="#6b7280" font-size="10">Binary Codec: 30-50% compression</text>
+                    </g>
+
+                    <!-- MetaModel Capabilities Section -->
+                    <g class="layer mcp-layer" transform="translate(820, 30)">
+                        <rect width="350" height="580" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+                        <text x="175" y="35" text-anchor="middle" fill="#1f2937" font-weight="700" font-size="16">Co-Processors</text>
+
+                        <!-- MetaModel Servers Grid -->
+                        <g transform="translate(20, 55)">
+                            <!-- Row 1 -->
+                            <g>
+                                <rect width="100" height="45" rx="2" fill="#14b8a6"/>
+                                <text x="50" y="20" text-anchor="middle" fill="white" font-weight="500" font-size="10">web-search</text>
+                                <text x="50" y="35" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="8">Search API</text>
+                            </g>
+                            <g transform="translate(110, 0)">
+                                <rect width="100" height="45" rx="2" fill="#0d9488"/>
+                                <text x="50" y="20" text-anchor="middle" fill="white" font-weight="500" font-size="10">researcher</text>
+                                <text x="50" y="35" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="8">Deep Research</text>
+                            </g>
+                            <g transform="translate(220, 0)">
+                                <rect width="100" height="45" rx="2" fill="#059669"/>
+                                <text x="50" y="20" text-anchor="middle" fill="white" font-weight="500" font-size="10">imagination</text>
+                                <text x="50" y="35" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="8">Context Seeds</text>
+                            </g>
+
+                            <!-- Row 2 -->
+                            <g transform="translate(0, 55)">
+                                <rect width="100" height="45" rx="2" fill="#f472b6"/>
+                                <text x="50" y="20" text-anchor="middle" fill="white" font-weight="500" font-size="10">music-analysis</text>
+                                <text x="50" y="35" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="8">Audio ML</text>
+                            </g>
+                            <g transform="translate(110, 55)">
+                                <rect width="100" height="45" rx="2" fill="#ec4899"/>
+                                <text x="50" y="20" text-anchor="middle" fill="white" font-weight="500" font-size="10">transcription</text>
+                                <text x="50" y="35" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="8">ASR / STT</text>
+                            </g>
+                            <g transform="translate(220, 55)">
+                                <rect width="100" height="45" rx="2" fill="#db2777"/>
+                                <text x="50" y="20" text-anchor="middle" fill="white" font-weight="500" font-size="10">voice-session</text>
+                                <text x="50" y="35" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="8">Real-time TTS</text>
+                            </g>
+
+                            <!-- Row 3 -->
+                            <g transform="translate(0, 110)">
+                                <rect width="100" height="45" rx="2" fill="#6366f1"/>
+                                <text x="50" y="20" text-anchor="middle" fill="white" font-weight="500" font-size="10">image-gen</text>
+                                <text x="50" y="35" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="8">Generative</text>
+                            </g>
+                            <g transform="translate(110, 110)">
+                                <rect width="100" height="45" rx="2" fill="#8b5cf6"/>
+                                <text x="50" y="20" text-anchor="middle" fill="white" font-weight="500" font-size="10">video-gen</text>
+                                <text x="50" y="35" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="8">Generative</text>
+                            </g>
+                            <g transform="translate(220, 110)">
+                                <rect width="100" height="45" rx="2" fill="#a855f7"/>
+                                <text x="50" y="20" text-anchor="middle" fill="white" font-weight="500" font-size="10">music-gen</text>
+                                <text x="50" y="35" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="8">Audio Gen</text>
+                            </g>
+
+                            <!-- Row 4 -->
+                            <g transform="translate(0, 165)">
+                                <rect width="100" height="45" rx="2" fill="#fbbf24"/>
+                                <text x="50" y="20" text-anchor="middle" fill="white" font-weight="500" font-size="10">svm</text>
+                                <text x="50" y="35" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="8">Blockchain</text>
+                            </g>
+                            <g transform="translate(110, 165)">
+                                <rect width="100" height="45" rx="2" fill="#f59e0b"/>
+                                <text x="50" y="20" text-anchor="middle" fill="white" font-weight="500" font-size="10">evm</text>
+                                <text x="50" y="35" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="8">ETH/Polygon/Base</text>
+                            </g>
+                            <g transform="translate(220, 165)">
+                                <rect width="100" height="45" rx="2" fill="#d97706"/>
+                                <text x="50" y="20" text-anchor="middle" fill="white" font-weight="500" font-size="10">x402</text>
+                                <text x="50" y="35" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="8">Payments</text>
+                            </g>
+
+                            <!-- Row 5 -->
+                            <g transform="translate(0, 220)">
+                                <rect width="100" height="45" rx="2" fill="#64748b"/>
+                                <text x="50" y="20" text-anchor="middle" fill="white" font-weight="500" font-size="10">coder</text>
+                                <text x="50" y="35" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="8">Code Edit/Exec</text>
+                            </g>
+                            <g transform="translate(110, 220)">
+                                <rect width="100" height="45" rx="2" fill="#475569"/>
+                                <text x="50" y="20" text-anchor="middle" fill="white" font-weight="500" font-size="10">reasoning</text>
+                                <text x="50" y="35" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="8">Chain-of-Thought</text>
+                            </g>
+                            <g transform="translate(220, 220)">
+                                <rect width="100" height="45" rx="2" fill="#334155"/>
+                                <text x="50" y="20" text-anchor="middle" fill="white" font-weight="500" font-size="10">tool-calling</text>
+                                <text x="50" y="35" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="8">Agent Tools</text>
+                            </g>
+                        </g>
+
+                        <!-- Container Security -->
+                        <g transform="translate(20, 340)">
+                            <rect width="310" height="80" rx="2" fill="#1f2937"/>
+                            <text x="155" y="25" text-anchor="middle" fill="white" font-weight="600" font-size="12">Confidential Computing</text>
+                            <text x="155" y="45" text-anchor="middle" fill="#94a3b8" font-size="10">TEE Enclaves | GPU-level encryption</text>
+                            <text x="155" y="62" text-anchor="middle" fill="#94a3b8" font-size="10">Remote Attestation | Zero-trust</text>
+                        </g>
+
+                        <!-- Storage -->
+                        <g transform="translate(20, 435)">
+                            <rect width="150" height="50" rx="2" fill="#0891b2"/>
+                            <text x="75" y="20" text-anchor="middle" fill="white" font-weight="500" font-size="11">IPFS Storage</text>
+                            <text x="75" y="38" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9">Encrypted Durable</text>
+                        </g>
+                        <g transform="translate(180, 435)">
+                            <rect width="150" height="50" rx="2" fill="#0e7490"/>
+                            <text x="75" y="20" text-anchor="middle" fill="white" font-weight="500" font-size="11">S2 Compatible</text>
+                            <text x="75" y="38" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9">Stream Storage</text>
+                        </g>
+
+                        <!-- Cache -->
+                        <g transform="translate(20, 500)">
+                            <rect width="310" height="50" rx="2" fill="#dc2626"/>
+                            <text x="155" y="20" text-anchor="middle" fill="white" font-weight="500" font-size="11">Distributed KV Cache + Semantic Cache</text>
+                            <text x="155" y="38" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9">Cache and Embeddings</text>
+                        </g>
+                    </g>
+
+                    <!-- Connecting arrows between sections -->
+                    <path d="M 350 200 L 450 200" stroke="#6366f1" stroke-width="2" stroke-dasharray="6" marker-end="url(#arrowhead2)"/>
+                    <path d="M 350 370 L 450 370" stroke="#6366f1" stroke-width="2" stroke-dasharray="6" marker-end="url(#arrowhead2)"/>
+                    <path d="M 770 200 L 820 200" stroke="#6366f1" stroke-width="2" stroke-dasharray="6" marker-end="url(#arrowhead2)"/>
+                </svg>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Animate elements on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.highlight-card, .perf-card, .flow-step, .chain-card').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
