@@ -141,14 +141,12 @@
                 </p>
                 <p>
                     The router implements a comprehensive taxonomy of <strong>9 routing strategies</strong> organized into
-                    three major categories. <em>Single-round routers</em> make stateless decisions using techniques such as
-                    KNN similarity matching against historical queries, SVM classification boundaries learned from labeled
-                    task-model pairs, and MLP neural networks trained on embedding representations. <em>Multi-round routers</em>
-                    extend this by maintaining conversation context, enabling more nuanced decisions as dialogues progress.
-                    <em>Agentic routers</em> handle complex tool-use scenarios where the routing decision depends on the
-                    anticipated chain of tool calls. Finally, <em>personalized routers</em> leverage matrix factorization
-                    and collaborative filtering to adapt routing decisions to individual user preferences and historical
-                    satisfaction patterns.
+                    three major categories. <em>stateless routing</em> which make stateless decisions using techniques such as
+                    KNN similarity matching against sematic cache, SVM classification boundaries learned from labeled
+                    task-model pairs, and data trained on vae/embedding representations. <em>Tool rounting (agent)</em>
+                    extend this by maintaining conversation context, enabling more nuanced decisions as dialogues progress,
+                    handling complex tool-use scenarios where the routing decision depends on the
+                    anticipated chain of tool calls.
                 </p>
                 <p>
                     Advanced routing strategies include <strong>Elo rating systems</strong> that continuously update model
