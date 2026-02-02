@@ -39,9 +39,9 @@
                 computing enclaves, an intelligent PolyModal routing system, and adaptive payment rails for compute resources.
             </p>
             <p>
-                Central to StackNet is the <strong>xRouter</strong>, an intelligent routing system that dynamically selects
+                Central to StackNet is the <strong>XRouter</strong>, an intelligent routing system that dynamically selects
                 the most suitable model for each query based on task complexity, cost constraints, and performance requirements.
-                The router implements over 9 distinct routing strategies organized into three categories: stateless routing, tool rounting (agent), 
+                The router implements over 9 distinct routing strategies organized into three categories: stateless routing, tool routing (agent),
                 and session routers that adapt to ongoing contexts. These strategies encompass
                 techniques including sematic caching, matrix factorization, KNN-similarity matching, SVM classification, 
                 graph-based routing for dependency resolution and Elo/BERT based signaling. 
@@ -63,8 +63,8 @@
             <p>
                 The architecture extends through a <strong>co-processor framework</strong> that enables specialized execution
                 units to handle domain-specific tasks. Co-processors include the Arena co-processor for competitive model
-                evaluation and ranking (used by xRouter), the MetaStream co-processor for real-time metadata aggregation, the Tool co-processor
-                for orchestrating MetaModel server invocations, the Agent co-processor for managing autonomous agent lifecycles,
+                evaluation and ranking (used by XRouter), the MetaStream co-processor for real-time metadata aggregation, the Tool co-processor
+                for orchestrating MetaModel server invocations, the agent co-processor for managing autonomous agent lifecycles,
                 and the Points co-processor for tracking reputation and reward distributions. Each co-processor operates as
                 an independent module that can be composed into complex execution pipelines.
             </p>
@@ -141,15 +141,15 @@
                 </p>
                 <p>
                     The router implements a comprehensive taxonomy of <strong>9 routing strategies</strong> organized into
-                    three major categories. <em>stateless routing</em> which make stateless decisions using techniques such as
+                    three major categories. <em>Stateless routing</em> makes stateless decisions using techniques such as
                     KNN similarity matching against sematic cache, SVM classification boundaries learned from labeled
-                    task-model pairs, and data trained on vae/embedding representations. <em>Tool rounting (agent)</em>
-                    extend this by maintaining conversation context, enabling more nuanced decisions as dialogues progress,
+                    task-model pairs, and data trained on VAE/embedding representations. <em>Tool routing (agent)</em>
+                    extends this by maintaining conversation context, enabling more nuanced decisions as dialogues progress,
                     handling complex tool-use scenarios where the routing decision depends on the
                     anticipated chain of tool calls.
                 </p>
                 <p>
-                    Advanced routing strategies include network-level Agent co-processor augmented <strong>Elo rating systems</strong> that continuously update model
+                    Advanced routing strategies include network-level agent co-processor augmented <strong>Elo rating systems</strong> that continuously update model
                     rankings based on pairwise comparison outcomes, <strong>graph-based routing</strong> for resolving task
                     dependencies and orchestrating multi-step workflows, <strong>BERT-based semantic routing</strong> that
                     understands query intent at a deep level, and <strong>hybrid probabilistic methods</strong> that combine
