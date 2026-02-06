@@ -25,6 +25,12 @@
                     <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" width="24" height="24" alt="HuggingFace" />
                     Demo
                 </a>
+                <a href="#results" class="nav-link">
+                    <div class="results-icon">
+                        🏆
+                    </div>
+                    Results
+                </a>
             </div>
         </header>
 
@@ -183,10 +189,82 @@
                 </p>
             </div>
 
+        </section>
 
 
-        <h2 style="text-align: center; display: block; width: 100%;">Framework & Application</h2>
 
+        
+        <!-- Results and Previews -->
+        <section class="results" id="results">
+            <div class="results-container">
+                <h2>Results</h2>
+                <div class="results_1">
+                    <h3>Image PolyModal Pipeline</h3>
+                    <span class="detail">
+                        Seed upscaled character conditioned iterative shot synthesis 
+                        using diffusion models via latent concatenation and negative RoPE shifts with LoRA fine-tuning.
+                        Execution distributed across 4 Operator nodes, 3 Models, 2 MetaModel invocations
+                    </span>
+                    <figure>
+                        <img src="fig/t2i.webp" alt="Text to Image">
+                        <figcaption>t2i</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="fig/i2i_face_replace.jpg" alt="Image to Image Attention">
+                        <figcaption>i2i attention</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="fig/i2i_camera.jpg" alt="Image to Image Multi-angle">
+                        <figcaption>i2i multi-angle</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="fig/i2i_upscale.jpg" alt="Image to Image SVR">
+                        <figcaption>i2i svr</figcaption>
+                    </figure>
+                </div>
+
+                <div class="results_1">
+                    <h3>Audio PolyModal Pipeline</h3>
+                    <span class="detail">
+                        Text to audio synthesis with lyrics, augmented style metadata guided Diffusion Transformer (DiT) Chain-of-Thought.
+                        Execution distributed across 1 Operator node, 1 Model, 4 MetaModel invocations
+                    </span>
+                    <div class="music-steps">
+                        <details class="lyrics">
+                            <summary>Lyrics</summary>
+                            <div class="lyrics-content">
+[chorus]
+1 billion
+5 billion ... 10
+look at me... i
+did it again
+1 billion
+5 billion ... 10
+look at me ... i
+did it again
+
+[instrumental]
+                            </div>
+                        </details>
+                        <div class="prompt">
+                            trap hip hop memphis style, chopped soul
+                        </div>
+                        <div class="music">
+                            <audio src="fig/1 Billion -v2.mp3" controls></audio>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+      
+
+        
+
+        <!-- Architecture Diagram -->
+        <section class="architecture" id="architecture">
+            <h2 style="text-align: center; display: block; width: 100%;">Framework & Application</h2>
             <div class="router-diagram">
                 <img src="fig/stacknet-xrouter.png" alt="XRouter Framework & Application Diagram" style="width: 100%; height: auto;">
                 <!-- SVG commented out - using image instead
@@ -258,10 +336,7 @@
                 </svg>
                 -->
             </div>
-        </section>
 
-        <!-- Architecture Diagram -->
-        <section class="architecture" id="architecture">
             <div class="diagram-container">
                 <img class="architecture-diagram" src="fig/stacknet-network.png" alt="StackNet Network Architecture Diagram" style="width: 100%; height: auto;">
                 <!-- SVG commented out - using image instead
